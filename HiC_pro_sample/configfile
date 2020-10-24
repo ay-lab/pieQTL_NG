@@ -1,0 +1,105 @@
+# Please change the variable settings below if necessary
+
+#########################################################################
+## Paths and Settings  - Do not edit !
+#########################################################################
+
+TMP_DIR = tmp
+LOGS_DIR = logs
+BOWTIE2_OUTPUT_DIR = bowtie_results
+MAPC_OUTPUT = hic_results
+
+RAW_DIR = rawdata
+
+N_CPU = 8
+
+LOGFILE = hicpro.log
+
+PBS_SUFFIX = VC101
+
+PBS_MEM = 20gb
+PBS_WALLTIME = 72:00:00
+PBS_QUEUE = urgent
+PBS_MAIL = sourya@lji.org
+
+JOB_NAME = HiChIP
+JOB_MEM = 20gb
+JOB_WALLTIME = 72:00:00
+JOB_QUEUE = urgent
+JOB_MAIL = sourya@lji.org
+
+#########################################################################
+## Data
+#########################################################################
+
+# _1 means that name of the read 1 data file is *_1.fastq.gz
+PAIR1_EXT = _R1
+# _2 means that name of the read 1 data file is *_2.fastq.gz
+PAIR2_EXT = _R2
+
+#######################################################################
+## Alignment options
+#######################################################################
+FORMAT = phred33
+
+MIN_MAPQ = 0
+
+# path of the index file of bowtie2
+BOWTIE2_IDX_PATH = /genomes/bowtie2_index/hg19/
+
+# options of bowtie2 alignment
+# we recommend users to not edit these settings
+BOWTIE2_GLOBAL_OPTIONS = --very-sensitive -L 30 --score-min L,-0.6,-0.2 --end-to-end --reorder
+BOWTIE2_LOCAL_OPTIONS =  --very-sensitive -L 20 --score-min L,-0.6,-0.2 --end-to-end --reorder
+
+#######################################################################
+## Annotation files
+#######################################################################
+
+REFERENCE_GENOME = hg19
+GENOME_SIZE = chrom_hg19.sizes 
+
+#######################################################################
+## Allele specific
+#######################################################################
+
+ALLELE_SPECIFIC_SNP = 
+
+#######################################################################
+## Digestion Hi-C
+#######################################################################
+
+GENOME_FRAGMENT = /HiCPro/HiC-Pro_2.9.0/annotation/MboI_hg19_RE_Fragments.bed 
+LIGATION_SITE = GATCGATC
+MIN_FRAG_SIZE = 
+MAX_FRAG_SIZE = 
+MIN_INSERT_SIZE = 
+MAX_INSERT_SIZE = 
+
+#######################################################################
+## Hi-C processing
+#######################################################################
+
+MIN_CIS_DIST =
+GET_ALL_INTERACTION_CLASSES = 1
+GET_PROCESS_SAM = 1
+RM_SINGLETON = 1
+RM_MULTI = 1
+RM_DUP = 1
+
+#######################################################################
+## Contact Maps
+#######################################################################
+
+BIN_SIZE = 5000 10000 20000 40000 100000 500000 1000000
+MATRIX_FORMAT = upper
+
+#######################################################################
+## ICE Normalization
+#######################################################################
+MAX_ITER = 100
+FILTER_LOW_COUNT_PERC = 0.02
+FILTER_HIGH_COUNT_PERC = 0
+EPS = 0.1
+
+
