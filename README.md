@@ -48,6 +48,20 @@ Modules
 
 	Script to compute the pieQTLs. The output file "dumped_pieQTL.txt" contains the pieQTLs (direct + indirect).
 
+** ultralong_pieQTL_Promoter_Interacting_SNP.r
+
+	Script to extract the gene and SNP pairs to be used for ultra-long pieQTL analysis.
+
+	1) First apply the script pieQTL.r but using the complete list of SNPs, instead of the eQTLs. The first and second column of the SNP file should contain the chromosome name, and the SNP coordinate.
+
+	2) Suppose, the direct interactions between promoters and SNPs are stored in the file "Promoters_Direct_PorE_Indirect_EQTL_PromSlack_5Kb_SNPSlack_5Kb_TSS_Included.bed". Further, the indirect interactions between promoters and SNPs are stored in the file "Promoters_Direct_PorE_Indirect_EQTL_PromSlack_5Kb_SNPSlack_5Kb_TSS_Included.bed". 
+
+	These two files will be provided as inputs to this script.
+
+	The output file "Input_Gene_SNP_pairs.txt" contains the genes and SNPs which participate in either direct and indirect interactions.
+
+	These gene-SNP pairs are then to be put in the matrixQTL framework.
+
 
 
 
