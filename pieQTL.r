@@ -72,25 +72,6 @@ GetPromEnh_OneSegment <- function(Segdata, TSSdata, ChIPSeqData, Ov_Offset=5000)
 }
 
 #=========================
-# dump loop annotation summary
-#=========================
-WriteLogAnnotLoop <- function(AnnotatedLoopData, OutTextFile, col1, col2) {
-
-	P_P_Idx <- which((AnnotatedLoopData[,col1] == "P") & (AnnotatedLoopData[,col2] == "P"))
-	P_E_Idx <- which(((AnnotatedLoopData[,col1] == "P") & (AnnotatedLoopData[,col2] == "E")) | ((AnnotatedLoopData[,col1] == "E") & (AnnotatedLoopData[,col2] == "P")))
-	E_E_Idx <- which((AnnotatedLoopData[,col1] == "E") & (AnnotatedLoopData[,col2] == "E"))
-	P_O_Idx <- which(((AnnotatedLoopData[,col1] == "P") & (AnnotatedLoopData[,col2] == "O")) | ((AnnotatedLoopData[,col1] == "O") & (AnnotatedLoopData[,col2] == "P")))
-	E_O_Idx <- which(((AnnotatedLoopData[,col1] == "E") & (AnnotatedLoopData[,col2] == "O")) | ((AnnotatedLoopData[,col1] == "O") & (AnnotatedLoopData[,col2] == "E")))
-	O_O_Idx <- which((AnnotatedLoopData[,col1] == "O") & (AnnotatedLoopData[,col2] == "O"))
-
-	fp_out <- file(OutTextFile, "w")
-	outtext <- paste0("\n Total number of loops: ", nrow(AnnotatedLoopData), "\n number of P-P loops: ", length(P_P_Idx), "\n number of P-E loops: ", length(P_E_Idx), "\n number of E-E loops: ", length(E_E_Idx), "\n number of P-O loops: ", length(P_O_Idx), "\n number of E-O loops: ", length(E_O_Idx), "\n number of O-O loops: ", length(O_O_Idx))
-	writeLines(outtext, con=fp_out, sep="\n")
-	close(fp_out)
-
-}
-
-#=========================
 # function to annotate the interacting bins in FitHiChIP loops as promoters / enhancers / others
 #=========================
 Annotate_FitHiChIP_Loops_P_E <- function(InpLoopFile, InpTSSFile, InpChIPSeqFile, AnnotatedLoopFile, OutTextFile, Ov_Offset=5000) {
@@ -116,8 +97,6 @@ Annotate_FitHiChIP_Loops_P_E <- function(InpLoopFile, InpTSSFile, InpChIPSeqFile
 	AnnotatedLoopData <- cbind.data.frame(FitHiChIPLoopData[,1:7], LabelVec_Seg1, LabelVec_Seg2, FitHiChIPLoopData[,8:ncol(FitHiChIPLoopData)])
 	colnames(AnnotatedLoopData) <- c(colnames(FitHiChIPLoopData)[1:7], "Label1", "Label2", colnames(FitHiChIPLoopData)[8:ncol(FitHiChIPLoopData)])
 	data.table::fwrite(AnnotatedLoopData, file = AnnotatedLoopFile, row.names = F, col.names = T, sep = "\t", quote=F, append=F)
-
-	WriteLogAnnotLoop(AnnotatedLoopData, OutTextFile, 8, 9)
 
 }
 
@@ -328,10 +307,6 @@ Get_Prom_Direct_EQTL <- function(Label_BinnedSeg_CurrChr, Conn_Idx_DF_Dist1, Pro
 # main code
 ##==================
 
-AnnotatedLoopFile <- paste0(Outprefix, '_FitHiChIP_Annot_offset_', (OffsetValue / 1000), 'Kb.bed')
-OutTextFile <- paste0(Outprefix, '_FitHiChIP_Annot_offset_', (OffsetValue / 1000), 'Kb.log')
-OutPromoterLoopFile <- paste0(Outprefix, '_FitHiChIP_Prom_Loops_offset_', (OffsetValue / 1000), 'Kb.bed')
-
 ## annotate P-E loops
 Annotate_FitHiChIP_Loops_P_E(LoopFile, TSSFile, ChIPSeqFile, AnnotatedLoopFile, OutTextFile, OffsetValue)	
 
@@ -383,7 +358,6 @@ BinnedSegFile <- paste0(Outprefix, '_BinnedSeg_Unique.bed')
 AnnotLoopFile_CurrChr <- paste0(Outprefix, '_temp_AnnotLoopFile_CurrChr.bed')
 EQTLFile_CurrChr <- paste0(Outprefix, '_temp_EQTLFile_CurrChr.bed')
 GTFFile_CurrChr <- paste0(Outprefix, '_temp_GTFFile_CurrChr.bed')
-GTFFile_GeneExprFile_CurrChr <- paste0(Outprefix, '_temp_GTFFile_GeneExprFile_CurrChr.bed')
 #========================
 
 #================================
@@ -643,7 +617,6 @@ system(paste("rm", BinnedSegFile))
 system(paste("rm", AnnotLoopFile_CurrChr))
 system(paste("rm", EQTLFile_CurrChr))
 system(paste("rm", GTFFile_CurrChr))
-system(paste("rm", GTFFile_GeneExprFile_CurrChr))
 
 
 ##=======================
