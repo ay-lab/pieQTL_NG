@@ -63,6 +63,17 @@ Modules
 	These gene-SNP pairs are then to be put in the matrixQTL framework.
 
 
+Other utility scripts
+--------------------------
+
+Conditional eQTL analysis:
+
+Check the link: https://github.com/ay-lab/Conditional_eQTL
 
 
+Contact
+----------
 
+For any queries, please email:
+
+Sourya Bhattacharyya (sourya@lji.org)
